@@ -1,5 +1,6 @@
-import Filter from "@/components/Filter";
 import { Stack } from "@mui/material";
+import Filter from "@/components/Filter";
+import { FILTER_ITEMS } from "@/constants/filters";
 
 const FilterList = () => {
   return (
@@ -8,7 +9,9 @@ const FilterList = () => {
       spacing={{ xs: 1, sm: 2 }}
       sx={{ border: "1px solid red", mb: 5 }}
     >
-      Filter List
+      {FILTER_ITEMS.map(({ label, filterValues }, idx) => (
+        <Filter label={label} filterValues={filterValues} />
+      ))}
     </Stack>
   );
 };
