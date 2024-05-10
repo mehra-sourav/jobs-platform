@@ -1,7 +1,13 @@
 import "./App.css";
-
+import Card from "@/components/Card";
+import Filter from "@/components/Filter";
 function App() {
-  return <>Application Platform</>;
+  return (
+    <>
+      <Filter />
+      <Card />
+    </>
+  );
 }
 
 export default App;
