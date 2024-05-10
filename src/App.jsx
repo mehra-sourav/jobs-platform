@@ -1,12 +1,13 @@
 import "./App.css";
-import Card from "@/components/Card";
-import Filter from "@/components/Filter";
+import { Container } from "@mui/material";
+import CardList from "@/components/CardList";
+import FilterList from "@/components/FilterList";
 function App() {
   return (
-    <>
-      <Filter />
-      <Card />
-    </>
+    <Container maxWidth="xl">
+      <FilterList />
+      <CardList />
+    </Container>
   );
 }
 
