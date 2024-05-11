@@ -1,13 +1,34 @@
 import { useState } from "react";
-import { FormControl, InputLabel, MenuItem, Box, Chip } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Box } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
 import DropDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { StyledSelect } from "./Filter.styles.js";
+import { Select, Chip, SvgIcon } from "./Filter.styles.js";
+
+const ItemChip = ({ ...params }) => (
+  <Chip
+    deleteIcon={
+      <SvgIcon size="small">
+        <ClearIcon />
+      </SvgIcon>
+    }
+    size="small"
+    {...params}
+  />
+);
 
 const Filter = ({ inputLabel, filterValues }) => {
   let [val, setVal] = useState([]);
 
   const handleChange = (event) => {
-    setVal((oldVal) => [...oldVal, event.target.value]);
+    const {
+      target: { value },
+    } = event;
+    setVal(typeof value === "string" ? value.split(",") : value);
+  };
+
+  const handleChipDelete = (deletedChip) => {
+    let newValues = val.filter((i) => i != deletedChip);
+    setVal(newValues);
   };
 
   return (
@@ -22,7 +43,7 @@ const Filter = ({ inputLabel, filterValues }) => {
       >
         {inputLabel}
       </InputLabel>
-      <StyledSelect
+      <Select
         value={val}
         label={inputLabel}
         IconComponent={DropDownIcon}
@@ -30,11 +51,17 @@ const Filter = ({ inputLabel, filterValues }) => {
         onChange={handleChange}
         multiple
         renderValue={(selected) => {
-          console.log("selected:", selected);
           return (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
               {selected.map((value) => (
-                <Chip key={value} label={value} />
+                <ItemChip
+                  key={value}
+                  label={value}
+                  onMouseDown={(e) => {
+                    e.stopPropagation();
+                  }}
+                  onDelete={() => handleChipDelete(value)}
+                ></ItemChip>
               ))}
             </Box>
           );
@@ -45,7 +72,7 @@ const Filter = ({ inputLabel, filterValues }) => {
             {label}
           </MenuItem>
         ))}
-      </StyledSelect>
+      </Select>
     </FormControl>
   );
 };
