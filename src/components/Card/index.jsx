@@ -6,7 +6,7 @@ import {
   Avatar,
   Box,
 } from "@mui/material";
-import { capitalizeString } from "../../utils/common";
+import { capitalizeEachWord } from "../../utils/common";
 
 const CardHeaderTitle = ({ companyName, jobRole, location }) => (
   <Box sx={{ textAlign: "left" }}>
@@ -14,23 +14,27 @@ const CardHeaderTitle = ({ companyName, jobRole, location }) => (
       {companyName}
     </Typography>
     <Typography component="h5" variant="subtitle1">
-      {capitalizeString(jobRole)}
+      {capitalizeEachWord(jobRole)}
     </Typography>
     <Typography component="h6" variant="caption">
-      {capitalizeString(location)}
+      {capitalizeEachWord(location)}
     </Typography>
   </Box>
 );
 
-const CardHeaderSubHeader = ({ minJdSalary, maxJdSalary }) => {
+const CardHeaderSubHeader = ({
+  minJdSalary,
+  maxJdSalary,
+  salaryCurrencyCode,
+}) => {
   let salaryRange = "";
 
   if (minJdSalary != null && maxJdSalary != null) {
-    salaryRange = `₹${minJdSalary} - ${maxJdSalary} LPA`;
+    salaryRange = `${salaryCurrencyCode} ${minJdSalary} - ${maxJdSalary}k`;
   } else if (minJdSalary != null) {
-    salaryRange = `₹${minJdSalary}+ LPA`;
+    salaryRange = `${salaryCurrencyCode} ${minJdSalary}+k`;
   } else if (maxJdSalary != null) {
-    salaryRange = `₹0 - ${maxJdSalary} LPA`;
+    salaryRange = `${salaryCurrencyCode} 0 - ${maxJdSalary}k`;
   } else {
     salaryRange = "N.A.";
   }
@@ -53,7 +57,15 @@ const CardHeaderSubHeader = ({ minJdSalary, maxJdSalary }) => {
 };
 
 const Card = ({
-  job: { logoUrl, companyName, jobRole, location, minJdSalary, maxJdSalary },
+  job: {
+    logoUrl,
+    companyName,
+    jobRole,
+    location,
+    minJdSalary,
+    maxJdSalary,
+    salaryCurrencyCode = "USD",
+  },
 }) => {
   return (
     <MUICard
@@ -73,6 +85,7 @@ const Card = ({
           <CardHeaderSubHeader
             minJdSalary={minJdSalary}
             maxJdSalary={maxJdSalary}
+            salaryCurrencyCode={salaryCurrencyCode}
           />
         }
         sx={{ alignItems: "self-start" }}
