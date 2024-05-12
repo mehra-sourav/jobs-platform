@@ -33,7 +33,7 @@ const CardList = () => {
         </Grid>
       )}
       {jobs?.map((job, idx) => (
-        <Grid key={idx} item xs={12} sm={4} md={4}>
+        <Grid key={idx} item xs={12} sm={6} md={4} lg={3}>
           <Card key={idx} job={job} />
         </Grid>
       ))}
