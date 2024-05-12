@@ -37,7 +37,7 @@ const jobsSlice = createSlice({
     });
     builder.addCase(getJobsList.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
+      state.error = action.error;
       state.success = false;
     });
   },
