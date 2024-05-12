@@ -1,13 +1,14 @@
+import { useState } from "react";
 import {
   Typography,
   Card as MUICard,
   CardHeader,
-  CardContent,
   Avatar,
   Box,
   CardActions,
   Button,
 } from "@mui/material";
+import { Collapse, CardContent, CollapseButton } from "./Card.styles";
 import { capitalizeEachWord } from "../../utils/common";
 
 const CardHeaderTitle = ({ companyName, jobRole, location }) => (
@@ -58,6 +59,29 @@ const CardHeaderSubHeader = ({
   );
 };
 
+const AboutSection = ({ jobDetails }) => {
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpanded = () => {
+    setExpanded((oldVal) => !oldVal);
+  };
+
+  return (
+    <Box>
+      <Collapse in={expanded} collapsedSize={250}>
+        <Typography sx={{ fontWeight: 550 }}>About Company:</Typography>
+        <Typography component="p" variant="subtitle2">
+          {jobDetails ?? "N.A."}
+        </Typography>
+      </Collapse>
+
+      {!expanded && (
+        <CollapseButton onClick={toggleExpanded}>View More</CollapseButton>
+      )}
+    </Box>
+  );
+};
+
 const Card = ({
   job: {
     logoUrl,
@@ -95,13 +119,8 @@ const Card = ({
         sx={{ alignItems: "self-start" }}
       />
 
-      <CardContent sx={{ textAlign: "left" }}>
-        <Box>
-          <Typography sx={{ fontWeight: 550 }}>About Company:</Typography>
-          <Typography component="p" variant="subtitle2">
-            {jobDetailsFromCompany ?? "N.A."}
-          </Typography>
-        </Box>
+      <CardContent sx={{}}>
+        <AboutSection jobDetails={jobDetailsFromCompany} />
 
         <Box sx={{ mt: 2 }}>
           <Typography component="p" variant="body2" sx={{ fontWeight: 550 }}>
@@ -112,6 +131,7 @@ const Card = ({
           </Typography>
         </Box>
       </CardContent>
+
       <CardActions
         sx={{
           flexDirection: "column",
