@@ -15,10 +15,14 @@ const filtersSlice = createSlice({
     },
     removeFilter: (state, action) => {
       const { filterName, filterValue } = action.payload;
-
-      state.filters[filterName] = state.filters[filterName].filter(
+      let newFilters = state.filters[filterName].filter(
         ({ value }) => !_.isEqual(value, filterValue)
       );
+      if (newFilters.length === 0) {
+        delete state.filters[filterName];
+      } else {
+        state.filters[filterName] = newFilters;
+      }
     },
     removeAllFilters: (state, action) => {
       const { filterName } = action.payload;

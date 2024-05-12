@@ -43,3 +43,18 @@ export const FILTER_ITEMS = [
   { label: "Remote", filterValues: REMOTE_OPTIONS },
   { label: "Minimum Base Salary", filterValues: MINIMUM_SALARY_RANGES },
 ];
+
+export const FILTER_QUERY_MAPPINGS = {
+  Roles: "jobRole",
+  "Number of Employees": "employeeCount",
+  Experience: {
+    min: "minExp",
+    max: "maxExp",
+  },
+  Remote: "location",
+  "Minimum Base Salary": {
+    min: "minJdSalary",
+    max: "maxJdSalary",
+  },
+  Company: "companyName",
+};

@@ -1,7 +1,7 @@
 import { FormControl, Autocomplete, TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import DropDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import useFilters from "@/hooks/useFilters.js";
+import useFilters from "@/hooks/useFilters";
 import { Chip, SvgIcon } from "./Filter.styles.js";
 
 const ItemChip = ({ ...params }) => (
