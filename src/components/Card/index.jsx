@@ -142,10 +142,10 @@ const Card = ({
         }}
         disableSpacing
       >
-        <Button variant="contained" fullWidth>
+        <Button variant="contained" color="secondary" fullWidth>
           Easy Apply
         </Button>
-        <Button variant="contained" fullWidth>
+        <Button variant="contained" color="primary" fullWidth>
           Unlock Referral Asks
         </Button>
       </CardActions>
