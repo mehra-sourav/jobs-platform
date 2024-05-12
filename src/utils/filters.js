@@ -27,15 +27,19 @@ export const doesItemSatisfyFilters = (filterConfig, dataItem) => {
       filterValue?.[0]?.value?.hasOwnProperty("min") ||
       filterValue?.[0]?.value?.hasOwnProperty("max")
     ) {
-      let [min, max] = getFilterRange(filterValue);
-      let rangeFilter = "";
+      let rangeFilter = filterValue?.some((filter) => {
+        let [min, max] = getFilterRange(filter);
+        let filterCondition = true;
 
-      if (min !== Infinity) {
-        rangeFilter = min <= dataItem[paramName.max];
-      }
-      if (max !== Infinity) {
-        rangeFilter &&= dataItem[paramName.min] <= max;
-      }
+        if (min !== Infinity) {
+          filterCondition = min <= dataItem[paramName.max];
+        }
+        if (max !== Infinity) {
+          filterCondition &&= dataItem[paramName.min] <= max;
+        }
+
+        return filterCondition;
+      });
 
       conditions &&= rangeFilter;
     }
@@ -54,22 +58,13 @@ export const doesItemSatisfyFilters = (filterConfig, dataItem) => {
 
 /**
  * Calculates the minimum and maximum values from a set of filters.
- * @param {Array<Object>} filters - An array of filter objects.
+ * @param {Array<Object>} filter - A filter object
  * @returns {Array<number>} An array containing the minimum and maximum values.
  */
-export const getFilterRange = (filters) => {
-  let min = filters?.[0]?.value?.min ?? 0,
-    max = filters?.[0]?.value?.max ?? 0;
+export const getFilterRange = (filter) => {
+  let min = filter?.value?.min ?? 0,
+    max = filter?.value?.max ?? Infinity;
 
-  for (const filter of filters) {
-    if (min < Number(filter?.value?.min)) {
-      min = Number(filter?.value?.min) ?? min;
-    }
-
-    if (max < Number(filter?.value?.max)) {
-      max = Number(filter?.value?.max) ?? max;
-    }
-  }
   max = max < min ? Infinity : max;
   return [min, max];
 };
