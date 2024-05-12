@@ -5,6 +5,8 @@ import {
   CardContent,
   Avatar,
   Box,
+  CardActions,
+  Button,
 } from "@mui/material";
 import { capitalizeEachWord } from "../../utils/common";
 
@@ -64,6 +66,8 @@ const Card = ({
     location,
     minJdSalary,
     maxJdSalary,
+    jobDetailsFromCompany,
+    minExp,
     salaryCurrencyCode = "USD",
   },
 }) => {
@@ -91,7 +95,40 @@ const Card = ({
         sx={{ alignItems: "self-start" }}
       />
 
-      <CardContent></CardContent>
+      <CardContent sx={{ textAlign: "left" }}>
+        <Box>
+          <Typography sx={{ fontWeight: 550 }}>About Company:</Typography>
+          <Typography component="p" variant="subtitle2">
+            {jobDetailsFromCompany ?? "N.A."}
+          </Typography>
+        </Box>
+
+        <Box sx={{ mt: 2 }}>
+          <Typography component="p" variant="body2" sx={{ fontWeight: 550 }}>
+            Minimum Experience
+          </Typography>
+          <Typography component="p" variant="subtitle2">
+            {minExp != null ? `${minExp} years` : "N.A."}
+          </Typography>
+        </Box>
+      </CardContent>
+      <CardActions
+        sx={{
+          flexDirection: "column",
+          px: 2,
+          mb: 1,
+          gap: 1,
+          border: "0px solid red",
+        }}
+        disableSpacing
+      >
+        <Button variant="contained" fullWidth>
+          Easy Apply
+        </Button>
+        <Button variant="contained" fullWidth>
+          Unlock Referral Asks
+        </Button>
+      </CardActions>
     </MUICard>
   );
 };
