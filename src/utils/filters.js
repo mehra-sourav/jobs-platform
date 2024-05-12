@@ -45,9 +45,18 @@ export const doesItemSatisfyFilters = (filterConfig, dataItem) => {
     }
     // String filters
     else {
-      let stringFilters = filterValue
-        ?.map((filter) => filter.value)
-        .includes(dataItem[paramName]);
+      let stringFilters;
+      if (paramName === "location") {
+        stringFilters = filterValue?.some((filter) =>
+          filter.value === "in-office"
+            ? !["remote", "hybrid"].includes(dataItem[paramName])
+            : dataItem[paramName] === filter.value
+        );
+      } else {
+        stringFilters = filterValue
+          ?.map((filter) => filter.value)
+          .includes(dataItem[paramName]);
+      }
 
       conditions &&= stringFilters;
     }
