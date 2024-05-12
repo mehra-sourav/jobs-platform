@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { FormControl, Autocomplete, TextField } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import DropDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import useFilters from "@/hooks/useFilters.js";
 import { Chip, SvgIcon } from "./Filter.styles.js";
 
 const ItemChip = ({ ...params }) => (
@@ -17,15 +17,19 @@ const ItemChip = ({ ...params }) => (
 );
 
 const Filter = ({ inputLabel, filterValues }) => {
-  let [val, setVal] = useState([]);
+  const { filters, setFilter, removeFilter, removeAllFilters } =
+    useFilters(inputLabel);
 
-  const handleChange = (e, value) => {
-    setVal(value);
+  const handleChange = (e, value, reason) => {
+    if (reason === "clear") {
+      removeAllFilters(inputLabel);
+    } else if (["removeOption", "selectOption"].includes(reason)) {
+      setFilter(inputLabel, value);
+    }
   };
 
-  const handleChipDelete = (deletedChip) => {
-    let newValues = val.filter((i) => i.value !== deletedChip);
-    setVal(newValues);
+  const handleChipDelete = (deletedChipValue) => {
+    removeFilter(inputLabel, deletedChipValue);
   };
 
   return (
@@ -35,6 +39,7 @@ const Filter = ({ inputLabel, filterValues }) => {
     >
       <Autocomplete
         multiple
+        autoComplete
         options={filterValues}
         getOptionLabel={(option) => option.label}
         popupIcon={<DropDownIcon />}
@@ -54,7 +59,7 @@ const Filter = ({ inputLabel, filterValues }) => {
           ));
         }}
         size="small"
-        value={val}
+        value={filters}
       />
     </FormControl>
   );

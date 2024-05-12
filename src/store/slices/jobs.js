@@ -43,7 +43,6 @@ const jobsSlice = createSlice({
   },
 });
 
-export const { actions: authActions } = jobsSlice;
 export { getJobsList };
 
 export default jobsSlice.reducer;
