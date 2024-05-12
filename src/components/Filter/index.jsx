@@ -55,7 +55,7 @@ const Filter = ({ inputLabel, filterValues }) => {
               }}
               onDelete={() => handleChipDelete(value)}
               sx={{ mr: 1 }}
-            ></ItemChip>
+            />
           ));
         }}
         size="small"
